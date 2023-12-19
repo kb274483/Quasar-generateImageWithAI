@@ -2,11 +2,11 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
-    <q-header elevated class="t-bg-orange-400 text-white">
+    <q-header elevated class="tw-bg-orange-400 text-white">
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <q-icon :name="fasHatWizard" class="t-w-6 t-h-8" />
+            <q-icon :name="fasHatWizard" class="tw-w-6 tw-h-8" />
           </q-avatar>
           Create your imagination
         </q-toolbar-title>
@@ -16,8 +16,8 @@
     </q-header>
 
     <q-drawer v-model="rightDrawerOpen" side="right" bordered>
-      <div class="t-flex t-justify-center t-items-center t-h-full">
-        <div class="t-text-gray-600 t-text-xl">
+      <div class="tw-flex tw-justify-center tw-items-center tw-h-full">
+        <div class="tw-text-gray-600 tw-text-xl">
           Maybe future...
         </div>
       </div>

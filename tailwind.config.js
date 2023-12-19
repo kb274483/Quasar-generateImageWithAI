@@ -8,6 +8,6 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  prefix: 't-'
+  prefix: 'tw-'
 }
 
