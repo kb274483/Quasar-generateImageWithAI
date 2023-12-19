@@ -69,7 +69,7 @@ module.exports = configure(function (/* ctx */) {
       // minify: false,
       // polyfillModulePreload: true,
       distDir : 'docs',
-      publicPath : './',
+      publicPath : '/quasarwithaiimage/',
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
