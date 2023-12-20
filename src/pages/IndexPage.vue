@@ -189,7 +189,7 @@ const imgLoadingFinish = ()=>{
 
 const downloadImage = async ()=>{
   try {
-    const response = await fetch(imgBase64Src.value as string)
+    const response = await fetch(generationImgSrc.value as string)
     if (!response.ok) {
       throw new Error(`Failed to fetch image. Status: ${response.status}`)
     }
