@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { ref , computed ,onMounted , watch} from 'vue';
+import { ref , computed ,onMounted , watch} from 'vue'
 import Axios from 'axios'
 
 const isLoading : Ref<boolean> = ref(false)
@@ -187,11 +187,27 @@ const imgLoadingFinish = ()=>{
   downloadBtn.value = true
 }
 
-const downloadImage = ()=>{
-  const a = document.createElement('a')
-  a.href = generationImgSrc.value
-  a.download = 'image.png'
-  a.click()
+const downloadImage = async ()=>{
+  try {
+    const response = await fetch(imgBase64Src.value as string)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image. Status: ${response.status}`)
+    }
+
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+
+    const imgLink = document.createElement('a')
+    imgLink.href = url
+    imgLink.download = 'downloaded_image.jpg'
+    document.body.appendChild(imgLink)
+    imgLink.click()
+
+    document.body.removeChild(imgLink)
+    URL.revokeObjectURL(url)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 </script>
