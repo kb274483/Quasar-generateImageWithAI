@@ -69,14 +69,18 @@
         <p class="tw-text-gray-600 tw-mb-2">
           You can either modify the image description based on the one you uploaded or generate an image according to your own imagination
         </p>
-        <img :src="generationImgSrc" alt="" class="rounded">
+        <img :src="generationImgSrc" alt="" class="rounded" @load="imgLoadingFinish()">
         <q-input v-model="generationPrompt"
           filled color="orange-5"
           label="Input your prompt"
           type="textarea" autogrow
         />
-        <div class="tw-flex tw-justify-end">
-          <q-btn push color="orange-5" text-color="white" 
+        <div class="tw-flex tw-justify-end tw-gap-4">
+          <q-btn v-if="downloadBtn" push color="deep-orange-6" 
+            text-color="white" label="Download Image"
+            class="tw-my-1 tw-p-1" @click="downloadImage()"
+          />
+          <q-btn push color="deep-orange-6" text-color="white" 
             label="Generate Your Ideas" 
             class="tw-my-1 tw-p-1" @click="generateImage()"
           />
@@ -106,6 +110,7 @@ const alertSwitch : Ref<boolean>  = ref(false)
 const imgLoading : Ref<boolean> = ref(false)
 // 圖片base64
 const imgBase64Src : Ref<string | ArrayBuffer | null> = ref(null)
+const downloadBtn : Ref<boolean> = ref(false)
 // 上傳檔案
 const file : Ref<File | null> = ref(null) 
 watch(file ,()=>{
@@ -170,12 +175,23 @@ const generateImage = ()=>{
   Axios.post('https://brief-url.link/node_ai/create_images',{prompt:generationPrompt.value}
   ).then(res => {
     generationImgSrc.value = res.data.result
-    isLoading.value = false
   })
   .catch(err => {
     console.log(err)
     isLoading.value = false
   }) 
+}
+
+const imgLoadingFinish = ()=>{
+  isLoading.value = false
+  downloadBtn.value = true
+}
+
+const downloadImage = ()=>{
+  const a = document.createElement('a')
+  a.href = generationImgSrc.value
+  a.download = 'image.png'
+  a.click()
 }
 
 </script>
