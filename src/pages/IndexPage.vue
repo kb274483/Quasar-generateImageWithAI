@@ -188,6 +188,7 @@ const imgLoadingFinish = ()=>{
 }
 
 const downloadImage = async ()=>{
+  isLoading.value = true
   Axios.post('https://brief-url.link/node_ai/download_images',{url:generationImgSrc.value}
   ).then(res => {
     const responseData = res.data.result
@@ -197,6 +198,7 @@ const downloadImage = async ()=>{
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+    isLoading.value = false
   })
   .catch(err => {
     console.log(err)
