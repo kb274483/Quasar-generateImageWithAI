@@ -5,6 +5,8 @@
 * 讓AI生成的圖片可以更精準符合自己想要的樣式。
 * 前端的部分是使用 Quasar 搭配 tailwindcss 以及 typescript建立。
 
+* 因為前端的部分架在 Heroku 上會進入休眠狀態，所以開啟時間較慢
+
 A Quasar Project
 
 ## Install the dependencies
