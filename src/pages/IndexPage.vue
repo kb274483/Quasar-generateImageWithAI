@@ -188,26 +188,20 @@ const imgLoadingFinish = ()=>{
 }
 
 const downloadImage = async ()=>{
-  try {
-    const response = await fetch(generationImgSrc.value as string)
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image. Status: ${response.status}`)
-    }
-
-    const blob = await response.blob()
-    const url = URL.createObjectURL(blob)
-
-    const imgLink = document.createElement('a')
-    imgLink.href = url
-    imgLink.download = 'downloaded_image.jpg'
-    document.body.appendChild(imgLink)
-    imgLink.click()
-
-    document.body.removeChild(imgLink)
-    URL.revokeObjectURL(url)
-  } catch (error) {
-    console.log(error)
-  }
+  Axios.post('https://brief-url.link/node_ai/download_images',{url:generationImgSrc.value}
+  ).then(res => {
+    const responseData = res.data.result
+    const downloadLink = document.createElement("a");
+    downloadLink.href = responseData;
+    downloadLink.download = "downloaded_image.jpeg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  })
+  .catch(err => {
+    console.log(err)
+    isLoading.value = false
+  })
 }
 
 </script>
