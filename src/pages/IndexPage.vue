@@ -12,7 +12,7 @@
   <!-- PopUp -->
   <div class="q-pa-xs q-gutter-sm">
     <q-dialog v-model="alertSwitch" persistent transition-show="scale" transition-hide="scale">
-      <q-card class="tw-bg-orange-300 text-white tw-w-1/2">
+      <q-card class="tw-bg-orange-300 text-white xs:tw-w-1/2 tw-w-full">
         <q-card-section>
           <div class="text-h6">Hello! This is alert.</div>
         </q-card-section>
@@ -137,7 +137,7 @@ const analyzeImage = () : void => {
     alertMsg.value = "Please upload a photo"
     return
   }
-  // http://localhost:5000/node_ai/analyze_images
+  // Axios.post('http://localhost:5000/node_ai/analyze_images',{imgBase64:imgBase64Src.value}
   Axios.post('https://brief-url.link/node_ai/analyze_images',{imgBase64:imgBase64Src.value}
   ).then(res => {
     aiDescription.value = res.data.result
@@ -173,7 +173,7 @@ const generateImage = ()=>{
     return
   }
   isLoading.value = true
-  // http://localhost:5000/node_ai/create_images
+  // Axios.post('http://localhost:5000/node_ai/create_images',{prompt:generationPrompt.value}
   Axios.post('https://brief-url.link/node_ai/create_images',{prompt:generationPrompt.value}
   ).then(res => {
     generationImgSrc.value = res.data.result
@@ -191,17 +191,21 @@ const imgLoadingFinish = ()=>{
 
 const downloadImage = async ()=>{
   isLoading.value = true
-  // http://localhost:5000/node_ai/download_images
-  Axios.post('https://brief-url.link/node_ai/download_images',{url:generationImgSrc.value}
-  ).then(res => {
-    const responseData = res.data.result
-    const encodedBase64 = encodeURIComponent(responseData);
-    const downloadLink = document.createElement("a");
-    downloadLink.href = `data:image/png;base64,${encodedBase64}`;
-    downloadLink.download = `download${new Date().toLocaleString()}.png`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    // 'http://localhost:5000/node_ai/download_images'
+  Axios({
+    method: 'post',
+    url: 'https://brief-url.link/node_ai/download_images',
+    responseType: 'blob',
+    data:{url:generationImgSrc.value},
+  }).then(res => {
+    const blob = res.data
+    var blobUrl = window.URL.createObjectURL(blob)
+    const downloadLink = document.createElement("a")
+    downloadLink.href = blobUrl
+    downloadLink.download = `download.png`
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    document.body.removeChild(downloadLink)
     isLoading.value = false
   })
   .catch(err => {
