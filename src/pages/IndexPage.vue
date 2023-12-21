@@ -137,7 +137,8 @@ const analyzeImage = () : void => {
     alertMsg.value = "Please upload a photo"
     return
   }
-  Axios.post('https://brief-url.link/node_ai/analyze_images',{imgBase64:imgBase64Src.value}
+  // https://brief-url.link/node_ai/analyze_images
+  Axios.post('http://localhost:5000/node_ai/analyze_images',{imgBase64:imgBase64Src.value}
   ).then(res => {
     aiDescription.value = res.data.result
     imgLoading.value = false
@@ -172,7 +173,8 @@ const generateImage = ()=>{
     return
   }
   isLoading.value = true
-  Axios.post('https://brief-url.link/node_ai/create_images',{prompt:generationPrompt.value}
+  // https://brief-url.link/node_ai/create_images
+  Axios.post('http://localhost:5000/node_ai/create_images',{prompt:generationPrompt.value}
   ).then(res => {
     generationImgSrc.value = res.data.result
   })
@@ -189,12 +191,13 @@ const imgLoadingFinish = ()=>{
 
 const downloadImage = async ()=>{
   isLoading.value = true
-  Axios.post('https://brief-url.link/node_ai/download_images',{url:generationImgSrc.value}
+  // https://brief-url.link/node_ai/download_images
+  Axios.post('http://localhost:5000/node_ai/download_images',{url:generationImgSrc.value}
   ).then(res => {
     const responseData = res.data.result
     const downloadLink = document.createElement("a");
-    downloadLink.href = responseData;
-    downloadLink.download = "downloaded_image.jpeg";
+    downloadLink.href = `data:image/png;base64,${responseData}`;
+    downloadLink.download = `download${new Date().toLocaleString()}.png`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
