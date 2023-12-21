@@ -76,6 +76,7 @@
           type="textarea" autogrow
         />
         <div class="tw-flex tw-justify-end tw-gap-4">
+          <a href="" id="forDownload"></a>
           <q-btn v-if="downloadBtn" push color="deep-orange-6" 
             text-color="white" label="Download Image"
             class="tw-my-1 tw-p-1" @click="downloadImage()"
@@ -200,12 +201,11 @@ const downloadImage = async ()=>{
   }).then(res => {
     const blob = res.data
     var blobUrl = window.URL.createObjectURL(blob)
-    const downloadLink = document.createElement("a")
+    const downloadLink = document.querySelector('#forDownload') as HTMLAnchorElement
     downloadLink.href = blobUrl
     downloadLink.download = `download.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
-    document.body.removeChild(downloadLink)
     isLoading.value = false
   })
   .catch(err => {
