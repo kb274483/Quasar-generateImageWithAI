@@ -36,7 +36,7 @@
         </template>
       </q-file>
     </div>
-    <div class="md:tw-flex tw-items-center tw-justify-center">
+    <div class="md:tw-flex tw-items-center tw-justify-center tw-py-6 xs:tw-py-2">
       <div class="md:tw-w-[40vw] tw-mx-auto tw-p-2" >
         <p class="tw-text-gray-600 tw-mb-2">
           Provide me with a photo, and I will return the content to you through AI.
