@@ -6,6 +6,7 @@
 * 前端的部分是使用 Quasar 搭配 tailwindcss 以及 typescript建立。
 
 * 因為前端的部分架在 Heroku 上會進入休眠狀態，所以開啟時間較慢
+* 以及OpenAI那邊的額度有限，額度用完就無法操作了～
 
 A Quasar Project
 
