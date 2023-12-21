@@ -195,8 +195,9 @@ const downloadImage = async ()=>{
   Axios.post('https://brief-url.link/node_ai/download_images',{url:generationImgSrc.value}
   ).then(res => {
     const responseData = res.data.result
+    const encodedBase64 = encodeURIComponent(responseData);
     const downloadLink = document.createElement("a");
-    downloadLink.href = `data:image/png;base64,${responseData}`;
+    downloadLink.href = `data:image/png;base64,${encodedBase64}`;
     downloadLink.download = `download${new Date().toLocaleString()}.png`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
